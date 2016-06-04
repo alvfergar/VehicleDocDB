@@ -1,8 +1,21 @@
 <resources>
+
     <string name="app_name">VehicleDocDB</string>
     <string name="action_settings">Settings</string>
     <string name="new_requeriments_button">New Requirement</string>
     <string name="new_incidents_button">New Incidents</string>
 
+    <!-- Requirements -->
+    <string name="requirement_name">Name</string>
+    <string name="requirement_date">Alarm Date</string>
+    <string name="requirement_create">Create</string>
+
+
+    <!-- Incidents -->
+    <string name="incident_name">Name</string>
+    <string name="incident_address">Address</string>
+    <string name="incident_date">Incident Date</string>
+    <string name="incident_price">Price</string>
+    <string name="incident_create">Create</string>
 
 </resources>

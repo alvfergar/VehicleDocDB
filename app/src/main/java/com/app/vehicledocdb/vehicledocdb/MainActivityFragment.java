@@ -1,5 +1,6 @@
 package com.app.vehicledocdb.vehicledocdb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -34,6 +35,21 @@ public class MainActivityFragment extends Fragment {
         mListView = (ListView) rootView.findViewById(R.id.listView);
         mRequerimentButton = (Button) rootView.findViewById(R.id.requirementButton);
         mIncidentButton = (Button) rootView.findViewById(R.id.incidentButton);
+
+        mRequerimentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), RequirementActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mIncidentButton.setOnClickListener(new View.OnClickListener(){
+           public void onClick(View v){
+               Intent intent = new Intent(getActivity(), IncidentActivity.class);
+               startActivity(intent);
+            }
+        });
 
         mListAdapter = new ArrayAdapter<Requirement>(getContext(), android.R.layout.simple_list_item_1, DataDummy.getInstance().getListRequirements());
         mListView.setAdapter(mListAdapter);

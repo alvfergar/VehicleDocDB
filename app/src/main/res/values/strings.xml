@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">VehicleDocDB</string>
     <string name="action_settings">Settings</string>
+    <string name="new_requeriments_button">New Requirement</string>
+    <string name="new_incidents_button">New Incidents</string>
+
+
 </resources>

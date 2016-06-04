@@ -9,9 +9,55 @@
     tools:context="com.app.vehicledocdb.vehicledocdb.MainActivityFragment"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_requeriments_button"
+                android:id="@+id/requirementButton"
+                android:layout_weight="1"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:backgroundTint="@color/colorPrimary"
+                android:backgroundTintMode="multiply"
+                android:textColor="@android:color/white"
+                android:gravity="center_horizontal" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_incidents_button"
+                android:id="@+id/incidentButton"
+                android:layout_weight="1"
+                android:layout_above="@+id/linearLayout"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:backgroundTint="@color/colorPrimary"
+                android:backgroundTintMode="multiply"
+                android:textColor="@android:color/white"
+                android:gravity="center_horizontal" />
+
+
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
 
 </RelativeLayout>

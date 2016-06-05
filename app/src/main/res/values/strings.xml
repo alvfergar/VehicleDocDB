@@ -10,6 +10,10 @@
     <string name="requirement_date">Alarm Date</string>
     <string name="requirement_create">Create</string>
 
+    <!-- Requirement Errors -->
+
+    <string name="requirement_error">This field cannot be empty</string>
+
 
     <!-- Incidents -->
     <string name="incident_name">Name</string>
@@ -17,5 +21,9 @@
     <string name="incident_date">Incident Date</string>
     <string name="incident_price">Price</string>
     <string name="incident_create">Create</string>
+
+    <!-- Incident Errors -->
+
+    <string name="incident_error">This field cannot be empty</string>
 
 </resources>

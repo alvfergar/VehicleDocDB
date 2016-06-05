@@ -31,8 +31,8 @@ public class GeneratorMain {
         incident.addIdProperty();
         incident.addStringProperty("incidentName");
         incident.addStringProperty("address");
-        incident.addLongProperty("date");
-        incident.addLongProperty("price");
+        incident.addStringProperty("date");
+        incident.addDoubleProperty("price");
         return incident;
     }
 

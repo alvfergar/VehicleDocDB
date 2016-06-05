@@ -1,8 +1,10 @@
 package com.app.vehicledocdb.vehicledocdb;
 
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -11,7 +13,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoMaster;
+import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoSession;
+import com.app.vehicledocdb.vehicledocdb.greendaomodel.RequirementDao;
+import com.app.vehicledocdb.vehicledocdb.model.Requirement;
+
 public class RequirementActivity extends AppCompatActivity {
+
+
+    public DaoSession daoSession;
+    public DaoMaster daoMaster;
+    private SQLiteDatabase db;
+    private RequirementDao requirementDao;
 
     private Button mButtonCreate;
     private EditText inputRequirementName, inputRequirementDate;
@@ -31,6 +44,13 @@ public class RequirementActivity extends AppCompatActivity {
         inputRequirementName = (EditText) findViewById(R.id.input_requirement_name);
         inputRequirementDate = (EditText) findViewById(R.id.input_requirement_date);
 
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "vehicle-db", null);
+        db = helper.getWritableDatabase();
+        daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+
+        requirementDao = daoSession.getRequirementDao();
+
         inputRequirementName.addTextChangedListener(new RequirementTextWatcher(inputRequirementName));
         inputRequirementDate.addTextChangedListener(new RequirementTextWatcher(inputRequirementDate));
 
@@ -40,6 +60,7 @@ public class RequirementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 submitForm();
+
             }
         });
     }
@@ -53,7 +74,15 @@ public class RequirementActivity extends AppCompatActivity {
             return;
         }
 
-        Toast.makeText(getApplicationContext(), "Created!", Toast.LENGTH_SHORT).show();
+        Requirement requirementToPersist = new Requirement();
+        requirementToPersist.setName(inputRequirementName.getText().toString());
+        requirementToPersist.setEndDate(inputRequirementDate.getText().toString());
+
+        requirementDao.insert(requirementToPersist);
+        Toast.makeText(this, "New Requirement Created", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     private boolean isValidateName() {

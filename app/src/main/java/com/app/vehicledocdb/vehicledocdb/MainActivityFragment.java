@@ -1,5 +1,6 @@
 package com.app.vehicledocdb.vehicledocdb;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -63,11 +65,18 @@ public class MainActivityFragment extends Fragment {
             }
         });
 
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               // Requirement selectedRequirement = (Requirement) requirementList.get(position);
+                //Intent
+            }
+        });
+
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getContext(), "vehicle-db", null);
         db = helper.getWritableDatabase();
         daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();
-
 
         requirementDao = daoSession.getRequirementDao();
         requirementList = requirementDao.loadAll();
@@ -75,7 +84,15 @@ public class MainActivityFragment extends Fragment {
 
         mListView.setAdapter(requirementAdapter);
 
-
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK){
+            requirementAdapter.clear();
+            requirementAdapter.addAll(requirementDao.loadAll());
+            requirementAdapter.notifyDataSetChanged();
+        }
     }
 }

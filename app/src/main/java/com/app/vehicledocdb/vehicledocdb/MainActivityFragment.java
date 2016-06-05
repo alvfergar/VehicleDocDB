@@ -1,27 +1,39 @@
 package com.app.vehicledocdb.vehicledocdb;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.app.vehicledocdb.vehicledocdb.data.DataDummy;
+import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoMaster;
+import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoSession;
+import com.app.vehicledocdb.vehicledocdb.greendaomodel.RequirementDao;
 import com.app.vehicledocdb.vehicledocdb.model.Requirement;
+
+import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
 
+    private RequirementDao requirementDao;
+    private List<Requirement> requirementList;
+    private Requirement requirement;
+    private RequirementAdapter requirementAdapter;
+
+    public DaoSession daoSession;
+    public DaoMaster daoMaster;
+    private SQLiteDatabase db;
+
     private ListView mListView;
     private Button mRequerimentButton;
     private Button mIncidentButton;
-    private ArrayAdapter mListAdapter;
 
     public MainActivityFragment() {
     }
@@ -51,8 +63,18 @@ public class MainActivityFragment extends Fragment {
             }
         });
 
-        mListAdapter = new ArrayAdapter<Requirement>(getContext(), android.R.layout.simple_list_item_1, DataDummy.getInstance().getListRequirements());
-        mListView.setAdapter(mListAdapter);
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getContext(), "vehicle-db", null);
+        db = helper.getWritableDatabase();
+        daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+
+
+        requirementDao = daoSession.getRequirementDao();
+        requirementList = requirementDao.loadAll();
+        requirementAdapter = new RequirementAdapter(getActivity(), R.layout.list_item_requirement, requirementList);
+
+        mListView.setAdapter(requirementAdapter);
+
 
         return rootView;
     }

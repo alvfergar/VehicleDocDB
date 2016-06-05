@@ -18,8 +18,9 @@ public class DataDummy {
 
         listRequirements = new ArrayList<Requirement>();
 
-        listRequirements.add(new Requirement("Seguro", "2016/08/12"));
-        listRequirements.add(new Requirement("Itv", "2017/02/06"));
+        listRequirements.add(new Requirement(null, "Seguro", "2016/08/12"));
+        listRequirements.add(new Requirement(null, "Itv", "2017/02/06"));
+        listRequirements.add(new Requirement(null, "Itv", "2017/04/15"));
     }
 
     public static DataDummy getInstance() {

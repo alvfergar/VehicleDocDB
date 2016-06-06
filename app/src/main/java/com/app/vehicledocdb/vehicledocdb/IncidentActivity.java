@@ -1,5 +1,7 @@
 package com.app.vehicledocdb.vehicledocdb;
 
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +13,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoMaster;
+import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoSession;
+import com.app.vehicledocdb.vehicledocdb.greendaomodel.IncidentDao;
+import com.app.vehicledocdb.vehicledocdb.model.Incident;
+
 public class IncidentActivity extends AppCompatActivity {
+
+    public DaoSession daoSession;
+    public DaoMaster daoMaster;
+    private SQLiteDatabase db;
+    private IncidentDao incidentDao;
 
     private Button mButtonCreate;
     private EditText inputIncidentName, inputIncidentAddress,
@@ -43,6 +55,13 @@ public class IncidentActivity extends AppCompatActivity {
         inputIncidentDate.addTextChangedListener(new IncidentTextWatcher(inputIncidentDate));
         inputIncidentPrice.addTextChangedListener(new IncidentTextWatcher(inputIncidentPrice));
 
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "vehicle-db", null);
+        db = helper.getWritableDatabase();
+        daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+
+        incidentDao = daoSession.getIncidentDao();
+
         mButtonCreate = (Button) findViewById(R.id.button_incident_create);
 
         mButtonCreate.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +90,17 @@ public class IncidentActivity extends AppCompatActivity {
             return;
         }
 
-        Toast.makeText(getApplicationContext(), "Created!", Toast.LENGTH_SHORT).show();
+        Incident incidentToPersist = new Incident();
+        incidentToPersist.setIncidentName(inputIncidentName.getText().toString());
+        incidentToPersist.setAddress(inputIncidentAddress.getText().toString());
+        incidentToPersist.setDate(inputIncidentDate.getText().toString());
+        incidentToPersist.setPrice(Double.valueOf(inputIncidentPrice.getText().toString()));
+
+        incidentDao.insert(incidentToPersist);
+        Toast.makeText(this, "New Incident Created", Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     private boolean isValidateName() {

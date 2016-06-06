@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".IncidentActivity" />
-        <activity android:name=".RequirementActivity"></activity>
+        <activity android:name=".RequirementActivity" />
+        <activity android:name=".IncidentChartActivity"></activity>
     </application>
 
 </manifest>

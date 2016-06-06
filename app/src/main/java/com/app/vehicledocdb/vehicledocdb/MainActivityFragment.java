@@ -36,6 +36,7 @@ public class MainActivityFragment extends Fragment {
     private ListView mListView;
     private Button mRequerimentButton;
     private Button mIncidentButton;
+    private Button mViewIncidentChartButton;
 
     public MainActivityFragment() {
     }
@@ -49,6 +50,16 @@ public class MainActivityFragment extends Fragment {
         mListView = (ListView) rootView.findViewById(R.id.listView);
         mRequerimentButton = (Button) rootView.findViewById(R.id.requirementButton);
         mIncidentButton = (Button) rootView.findViewById(R.id.incidentButton);
+        mViewIncidentChartButton = (Button) rootView.findViewById(R.id.view_incident_chart_button);
+
+
+        mViewIncidentChartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), IncidentChartActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mRequerimentButton.setOnClickListener(new View.OnClickListener() {
             @Override

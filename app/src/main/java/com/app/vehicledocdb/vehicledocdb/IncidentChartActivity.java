@@ -74,6 +74,7 @@ public class IncidentChartActivity extends AppCompatActivity {
         for (Map.Entry<String, Double>  element: sumPriceByIncident.entrySet() ){
             yVals1.add(new Entry(element.getValue().floatValue(), index));
             xVals.add(element.getKey()+": "+element.getValue().toString()+" €");
+            index++;
         }
 //        for (int i = 0; i < yData.length; i++)
 //            yVals1.add(new Entry(yData[i], i));

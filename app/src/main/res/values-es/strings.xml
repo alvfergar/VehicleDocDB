@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VehicleDocDB</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="new_requeriments_button">Nuevo Requerimiento</string>
+    <string name="new_incidents_button">Nueva Incidencia</string>
+    <string name="view_inicents_chart">Ver Gráfico de Incidencias</string>
+
+    <!-- Requirements -->
+    <string name="requirement_name">Nombre</string>
+    <string name="requirement_date">Fecha de Alarma</string>
+    <string name="requirement_create">Crear</string>
+
+    <!-- Requirement Errors -->
+
+    <string name="requirement_error">Este campo no puede ser vacio</string>
+
+
+    <!-- Incidents -->
+    <string name="incident_name">Nombre</string>
+    <string name="incident_address">Direccion</string>
+    <string name="incident_date">Fecha</string>
+    <string name="incident_price">Precio</string>
+    <string name="incident_create">Crear</string>
+
+    <!-- Incident Errors -->
+
+    <string name="incident_error">Este campo no puede estar vacio</string>
+
+
+    <!-- Incident Types -->
+
+    <string-array name="incident_types">
+        <item>Inspección</item>
+        <item>Reparación</item>
+        <item>Combustible</item>
+    </string-array>
+
+    <string name="incident_inspection">Inspección</string>
+    <string name="incident_repair">Reparación</string>
+    <string name="incident_gas">Combustible</string>
+
+</resources>

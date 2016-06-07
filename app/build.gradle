@@ -26,4 +26,5 @@ dependencies {
     compile 'com.android.support:design:23.2.1'
     compile 'org.greenrobot:greendao:2.2.0'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.5'
+    compile 'com.google.guava:guava:19.0'
 }

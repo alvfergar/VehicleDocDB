@@ -16,7 +16,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
+        /** singleton para base de datos porque la estamos llamando varias veces,
+         * hacemos que devuelva la session y listo
+         */
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -1,10 +1,13 @@
 package com.app.vehicledocdb.vehicledocdb;
 
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoSession;
+import com.app.vehicledocdb.vehicledocdb.greendaomodel.IncidentDao;
+import com.app.vehicledocdb.vehicledocdb.model.Incident;
+import com.app.vehicledocdb.vehicledocdb.util.DbConnection;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -12,22 +15,25 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class IncidentChartActivity extends AppCompatActivity {
 
     private PieChart mChart;
-    private float[] yData = {25, 20, 35};
-    private String[] xData = {};
+    //private float[] yData = {25, 20, 35};
+    //private String[] xData = {};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incident_chart);
-
-        Resources res = getResources();
-        xData = res.getStringArray(R.array.incident_types);
 
         // in this example, a LineChart is initialized from xml
         mChart = (PieChart) findViewById(R.id.chart);
@@ -41,12 +47,9 @@ public class IncidentChartActivity extends AppCompatActivity {
         mChart.setHoleRadius(25);
         mChart.setTransparentCircleRadius(10);
 
-
         // enable rotation of the chart by touch
         mChart.setRotationAngle(0);
         mChart.setRotationEnabled(true);
-
-
 
         // add data
         addData();
@@ -60,14 +63,25 @@ public class IncidentChartActivity extends AppCompatActivity {
 
     private void addData() {
         ArrayList<Entry> yVals1 = new ArrayList<Entry>();
-
-        for (int i = 0; i < yData.length; i++)
-            yVals1.add(new Entry(yData[i], i));
-
         ArrayList<String> xVals = new ArrayList<String>();
+        List<Incident> incidentList = new ArrayList<>();
+        Map<String, Double> sumPriceByIncident = new HashMap<>();
+        int index = 0;
 
-        for (int i = 0; i < xData.length; i++)
-            xVals.add(xData[i]);
+        incidentList = getIncidentsInDB();
+        sumPriceByIncident = sumIncidentPriceWithSameName(incidentList);
+
+        for (Map.Entry<String, Double>  element: sumPriceByIncident.entrySet() ){
+            yVals1.add(new Entry(element.getValue().floatValue(), index));
+            xVals.add(element.getKey()+": "+element.getValue().toString()+" €");
+        }
+//        for (int i = 0; i < yData.length; i++)
+//            yVals1.add(new Entry(yData[i], i));
+//
+//
+//
+//        for (int i = 0; i < xData.length; i++)
+//            xVals.add(xData[i]);
 
         // create pie data set
         PieDataSet dataSet = new PieDataSet(yVals1, "Vehicle Incidents");
@@ -84,12 +98,6 @@ public class IncidentChartActivity extends AppCompatActivity {
             colors.add(c);
 
         for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
             colors.add(c);
 
         colors.add(ColorTemplate.getHoloBlue());
@@ -109,6 +117,42 @@ public class IncidentChartActivity extends AppCompatActivity {
         // update pie chart
         mChart.invalidate();
     }
+
+    private List<Incident> getIncidentsInDB() {
+        List<Incident> incidentList = new ArrayList<>();
+
+        DaoSession daoSession = DbConnection.getDaoSession(getApplicationContext());
+        IncidentDao incidentDao = daoSession.getIncidentDao();
+        incidentList = incidentDao.loadAll();
+
+        return incidentList;
+    }
+
+    private Map<String, Double> sumIncidentPriceWithSameName(List<Incident> incidentList) {
+        Map<String, List<Double>> incidentMap = new HashMap<>();
+
+        for (Incident incident : incidentList) {
+            if( incidentMap.containsKey(incident.getIncidentName())){
+                incidentMap.get(incident.getIncidentName()).add(incident.getPrice());
+            }else{
+                incidentMap.put(incident.getIncidentName(), Lists.newArrayList(incident.getPrice()));
+            }
+
+        }
+
+        return Maps.transformValues(incidentMap, new Function<List<Double>, Double>() {
+            @Override
+            public Double apply(List<Double> input) {
+                Double sum = 0.0;
+                for(Double element: input){
+                    sum += element;
+                }
+                return sum;
+            }
+        });
+    }
+
+
 
 }
 

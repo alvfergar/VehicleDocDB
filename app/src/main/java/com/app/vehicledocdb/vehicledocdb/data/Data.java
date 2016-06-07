@@ -37,8 +37,8 @@ public class Data {
 
         for(Incident req: incidentList){
             contentValues = new ContentValues();
-            contentValues.put(IncidentDao.Properties.IncidentName.columnName, req.getIncidentName());
-            contentValues.put(IncidentDao.Properties.Address.columnName, req.getAddress());
+            contentValues.put(IncidentDao.Properties.Name.columnName, req.getName());
+            contentValues.put(IncidentDao.Properties.Description.columnName, req.getDescription());
             contentValues.put(IncidentDao.Properties.Date.columnName, req.getDate());
             contentValues.put(IncidentDao.Properties.Price.columnName, req.getPrice());
             contentValuesIncidentList.add(contentValues);

@@ -26,9 +26,9 @@ public class IncidentActivity extends AppCompatActivity {
     private IncidentDao incidentDao;
 
     private Button mButtonCreate;
-    private EditText inputIncidentName, inputIncidentAddress,
+    private EditText inputIncidentName, inputIncidentDescription,
             inputIncidentDate, inputIncidentPrice;
-    private TextInputLayout inputLayoutIncidentName, inputLayoutIncidentAddress,
+    private TextInputLayout inputLayoutIncidentName, inputLayoutIncidentDescription,
             inputLayoutIncidentDate, inputLayoutIncidentPrice;
 
     @Override
@@ -38,20 +38,20 @@ public class IncidentActivity extends AppCompatActivity {
 
         inputLayoutIncidentName = (TextInputLayout)
                 findViewById(R.id.input_layout_incident_name);
-        inputLayoutIncidentAddress = (TextInputLayout)
-                findViewById(R.id.input_layout_incident_address);
+        inputLayoutIncidentDescription = (TextInputLayout)
+                findViewById(R.id.input_layout_incident_description);
         inputLayoutIncidentDate = (TextInputLayout)
                 findViewById(R.id.input_layout_incident_date);
         inputLayoutIncidentPrice = (TextInputLayout)
                 findViewById(R.id.input_layout_incident_price);
 
         inputIncidentName = (EditText) findViewById(R.id.input_incident_name);
-        inputIncidentAddress = (EditText) findViewById(R.id.input_incident_address);
+        inputIncidentDescription = (EditText) findViewById(R.id.input_incident_description);
         inputIncidentDate = (EditText) findViewById(R.id.input_incident_date);
         inputIncidentPrice = (EditText) findViewById(R.id.input_incident_price);
 
         inputIncidentName.addTextChangedListener(new IncidentTextWatcher(inputIncidentName));
-        inputIncidentAddress.addTextChangedListener(new IncidentTextWatcher(inputIncidentAddress));
+        inputIncidentDescription.addTextChangedListener(new IncidentTextWatcher(inputIncidentDescription));
         inputIncidentDate.addTextChangedListener(new IncidentTextWatcher(inputIncidentDate));
         inputIncidentPrice.addTextChangedListener(new IncidentTextWatcher(inputIncidentPrice));
 
@@ -91,8 +91,8 @@ public class IncidentActivity extends AppCompatActivity {
         }
 
         Incident incidentToPersist = new Incident();
-        incidentToPersist.setIncidentName(inputIncidentName.getText().toString());
-        incidentToPersist.setAddress(inputIncidentAddress.getText().toString());
+        incidentToPersist.setName(inputIncidentName.getText().toString());
+        incidentToPersist.setDescription(inputIncidentDescription.getText().toString());
         incidentToPersist.setDate(inputIncidentDate.getText().toString());
         incidentToPersist.setPrice(Double.valueOf(inputIncidentPrice.getText().toString()));
 
@@ -117,14 +117,14 @@ public class IncidentActivity extends AppCompatActivity {
     }
 
     private boolean isValidateAddress() {
-        String address = inputIncidentAddress.getText().toString().trim();
+        String address = inputIncidentDescription.getText().toString().trim();
         boolean result = true;
         if (address.isEmpty()) {
-            inputLayoutIncidentAddress.setError(getString(R.string.incident_error));
-            requestFocus(inputIncidentAddress);
+            inputLayoutIncidentDescription.setError(getString(R.string.incident_error));
+            requestFocus(inputIncidentDescription);
             result = false;
         } else {
-            inputLayoutIncidentAddress.setErrorEnabled(false);
+            inputLayoutIncidentDescription.setErrorEnabled(false);
         }
         return result;
     }
@@ -186,7 +186,7 @@ public class IncidentActivity extends AppCompatActivity {
                 case R.id.input_incident_name:
                     isValidateName();
                     break;
-                case R.id.input_incident_address:
+                case R.id.input_incident_description:
                     isValidateAddress();
                     break;
                 case R.id.input_incident_date:

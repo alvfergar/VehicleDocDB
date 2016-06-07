@@ -7,8 +7,8 @@ package com.app.vehicledocdb.vehicledocdb.model;
 public class Incident {
 
     private Long id;
-    private String incidentName;
-    private String address;
+    private String name;
+    private String description;
     private String date;
     private Double price;
 
@@ -19,10 +19,10 @@ public class Incident {
         this.id = id;
     }
 
-    public Incident(Long id, String incidentName, String address, String date, Double price) {
+    public Incident(Long id, String name, String description, String date, Double price) {
         this.id = id;
-        this.incidentName = incidentName;
-        this.address = address;
+        this.name = name;
+        this.description = description;
         this.date = date;
         this.price = price;
     }
@@ -35,20 +35,20 @@ public class Incident {
         this.id = id;
     }
 
-    public String getIncidentName() {
-        return incidentName;
+    public String getName() {
+        return name;
     }
 
-    public void setIncidentName(String incidentName) {
-        this.incidentName = incidentName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getDescription() {
+        return description;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDate() {

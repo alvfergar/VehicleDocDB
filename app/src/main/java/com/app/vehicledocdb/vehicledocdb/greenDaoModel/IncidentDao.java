@@ -24,8 +24,8 @@ public class IncidentDao extends AbstractDao<Incident, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property IncidentName = new Property(1, String.class, "incidentName", false, "INCIDENT_NAME");
-        public final static Property Address = new Property(2, String.class, "address", false, "ADDRESS");
+        public final static Property Name = new Property(1, String.class, "name", false, "NAME");
+        public final static Property Description = new Property(2, String.class, "description", false, "DESCRIPTION");
         public final static Property Date = new Property(3, String.class, "date", false, "DATE");
         public final static Property Price = new Property(4, Double.class, "price", false, "PRICE");
     };
@@ -44,8 +44,8 @@ public class IncidentDao extends AbstractDao<Incident, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"INCIDENT\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
-                "\"INCIDENT_NAME\" TEXT," + // 1: incidentName
-                "\"ADDRESS\" TEXT," + // 2: address
+                "\"NAME\" TEXT," + // 1: name
+                "\"DESCRIPTION\" TEXT," + // 2: description
                 "\"DATE\" TEXT," + // 3: date
                 "\"PRICE\" REAL);"); // 4: price
     }
@@ -66,14 +66,14 @@ public class IncidentDao extends AbstractDao<Incident, Long> {
             stmt.bindLong(1, id);
         }
  
-        String incidentName = entity.getIncidentName();
-        if (incidentName != null) {
-            stmt.bindString(2, incidentName);
+        String name = entity.getName();
+        if (name != null) {
+            stmt.bindString(2, name);
         }
  
-        String address = entity.getAddress();
-        if (address != null) {
-            stmt.bindString(3, address);
+        String description = entity.getDescription();
+        if (description != null) {
+            stmt.bindString(3, description);
         }
  
         String date = entity.getDate();
@@ -98,8 +98,8 @@ public class IncidentDao extends AbstractDao<Incident, Long> {
     public Incident readEntity(Cursor cursor, int offset) {
         Incident entity = new Incident( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // incidentName
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // address
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // description
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // date
             cursor.isNull(offset + 4) ? null : cursor.getDouble(offset + 4) // price
         );
@@ -110,8 +110,8 @@ public class IncidentDao extends AbstractDao<Incident, Long> {
     @Override
     public void readEntity(Cursor cursor, Incident entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setIncidentName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setAddress(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setDescription(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setDate(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setPrice(cursor.isNull(offset + 4) ? null : cursor.getDouble(offset + 4));
      }

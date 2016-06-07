@@ -18,7 +18,7 @@
 
     <!-- Incidents -->
     <string name="incident_name">Name</string>
-    <string name="incident_address">Address</string>
+    <string name="incident_description">Description</string>
     <string name="incident_date">Incident Date</string>
     <string name="incident_price">Price</string>
     <string name="incident_create">Create</string>

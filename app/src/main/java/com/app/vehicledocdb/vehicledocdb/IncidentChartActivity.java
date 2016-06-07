@@ -133,10 +133,10 @@ public class IncidentChartActivity extends AppCompatActivity {
         Map<String, List<Double>> incidentMap = new HashMap<>();
 
         for (Incident incident : incidentList) {
-            if( incidentMap.containsKey(incident.getIncidentName())){
-                incidentMap.get(incident.getIncidentName()).add(incident.getPrice());
+            if( incidentMap.containsKey(incident.getName())){
+                incidentMap.get(incident.getName()).add(incident.getPrice());
             }else{
-                incidentMap.put(incident.getIncidentName(), Lists.newArrayList(incident.getPrice()));
+                incidentMap.put(incident.getName(), Lists.newArrayList(incident.getPrice()));
             }
 
         }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">VehicleDocDB</string>
     <string name="action_settings">Ajustes</string>
     <string name="new_requeriments_button">Nuevo Requerimiento</string>
     <string name="new_incidents_button">Nueva Incidencia</string>
@@ -18,7 +17,7 @@
 
     <!-- Incidents -->
     <string name="incident_name">Nombre</string>
-    <string name="incident_address">Direccion</string>
+    <string name="incident_description">Descripción</string>
     <string name="incident_date">Fecha</string>
     <string name="incident_price">Precio</string>
     <string name="incident_create">Crear</string>

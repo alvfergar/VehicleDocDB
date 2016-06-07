@@ -29,8 +29,8 @@ public class GeneratorMain {
     private static Entity createIncidentTable(Schema schema) {
         Entity incident = schema.addEntity("Incident");
         incident.addIdProperty();
-        incident.addStringProperty("incidentName");
-        incident.addStringProperty("address");
+        incident.addStringProperty("name");
+        incident.addStringProperty("description");
         incident.addStringProperty("date");
         incident.addDoubleProperty("price");
         return incident;

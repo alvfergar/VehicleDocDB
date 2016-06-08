@@ -38,5 +38,8 @@
     <string name="incident_inspection">Inspección</string>
     <string name="incident_repair">Reparación</string>
     <string name="incident_gas">Combustible</string>
+    <string name="incident">Incidente</string>
+    <string name="requirement">Requerimiento</string>
+    <string name="incidents_chart">Gráfica de Incidentes</string>
 
 </resources>

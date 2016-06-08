@@ -39,5 +39,8 @@
     <string name="incident_inspection">Inspection</string>
     <string name="incident_repair">Repair</string>
     <string name="incident_gas">Gas</string>
+    <string name="incident">Incident</string>
+    <string name="requirement">Requirement</string>
+    <string name="incidents_chart">Incidents Chart</string>
 
 </resources>

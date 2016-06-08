@@ -18,9 +18,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".IncidentActivity" />
-        <activity android:name=".RequirementActivity" />
-        <activity android:name=".IncidentChartActivity"></activity>
+        <activity
+            android:name=".IncidentActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/incident">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.app.vehicledocdb.vehicledocdb.MainActivity" />
+        </activity>
+        <activity
+            android:name=".RequirementActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/requirement">>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.app.vehicledocdb.vehicledocdb.MainActivity" />
+        </activity>
+        <activity
+            android:name=".IncidentChartActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/incidents_chart">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.app.vehicledocdb.vehicledocdb.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

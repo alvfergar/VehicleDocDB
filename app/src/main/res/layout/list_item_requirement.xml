@@ -26,4 +26,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:gravity="center_vertical"
         android:padding="20dp" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/switch1" />
 </LinearLayout>

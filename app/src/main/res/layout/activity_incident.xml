@@ -26,9 +26,19 @@
                 android:id="@+id/input_incident_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/incident_name" />
+                android:hint="@string/incident_name"
+                android:inputType="text"/>
+
+            <!--<Spinner-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:prompt="@string/incident_name"-->
+                <!--android:id="@+id/spinner"-->
+                <!--android:spinnerMode="dialog"/>-->
 
         </android.support.design.widget.TextInputLayout>
+
+
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/input_layout_incident_description"
@@ -39,6 +49,7 @@
                 android:id="@+id/input_incident_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
                 android:hint="@string/incident_description" />
 
         </android.support.design.widget.TextInputLayout>
@@ -53,6 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="date"
+                android:ems="10"
                 android:hint="@string/incident_date" />
 
         </android.support.design.widget.TextInputLayout>
@@ -66,7 +78,8 @@
                 android:id="@+id/input_incident_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/incident_price" />
+                android:hint="@string/incident_price"
+                android:inputType="numberDecimal"/>
 
         </android.support.design.widget.TextInputLayout>
 

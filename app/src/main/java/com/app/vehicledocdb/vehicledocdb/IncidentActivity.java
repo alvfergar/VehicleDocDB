@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoMaster;
@@ -31,6 +32,9 @@ public class IncidentActivity extends AppCompatActivity {
     private TextInputLayout inputLayoutIncidentName, inputLayoutIncidentDescription,
             inputLayoutIncidentDate, inputLayoutIncidentPrice;
 
+    private Spinner spinnerIncidentName;
+    private String mIncidentName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +50,37 @@ public class IncidentActivity extends AppCompatActivity {
                 findViewById(R.id.input_layout_incident_price);
 
         inputIncidentName = (EditText) findViewById(R.id.input_incident_name);
+//        spinnerIncidentName = (Spinner) findViewById(R.id.spinner);
         inputIncidentDescription = (EditText) findViewById(R.id.input_incident_description);
         inputIncidentDate = (EditText) findViewById(R.id.input_incident_date);
         inputIncidentPrice = (EditText) findViewById(R.id.input_incident_price);
 
+
         inputIncidentName.addTextChangedListener(new IncidentTextWatcher(inputIncidentName));
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+//                R.array.incident_types, android.R.layout.simple_spinner_item);
+//// Specify the layout to use when the list of choices appears
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//// Apply the adapter to the spinner
+//        spinnerIncidentName.setAdapter(adapter);
+//        spinnerIncidentName.setSelection(-1);
+//
+//        spinnerIncidentName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if(position < 0){
+//                    Toast.makeText(getApplicationContext(),"Debe establecer un nombre", Toast.LENGTH_SHORT).show();
+//                }else{
+//                    String[] incidentNameArray = getResources().getStringArray(R.array.incident_types);
+//                    mIncidentName = incidentNameArray[position];
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
         inputIncidentDescription.addTextChangedListener(new IncidentTextWatcher(inputIncidentDescription));
         inputIncidentDate.addTextChangedListener(new IncidentTextWatcher(inputIncidentDate));
         inputIncidentPrice.addTextChangedListener(new IncidentTextWatcher(inputIncidentPrice));
@@ -91,6 +121,7 @@ public class IncidentActivity extends AppCompatActivity {
         }
 
         Incident incidentToPersist = new Incident();
+        //incidentToPersist.setName(inputIncidentName.getText().toString());
         incidentToPersist.setName(inputIncidentName.getText().toString());
         incidentToPersist.setDescription(inputIncidentDescription.getText().toString());
         incidentToPersist.setDate(inputIncidentDate.getText().toString());

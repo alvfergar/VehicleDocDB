@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.app.vehicledocdb.vehicledocdb.greendaomodel.IncidentDao;
 import com.app.vehicledocdb.vehicledocdb.model.Incident;
@@ -38,7 +40,7 @@ public class IncidentRecyclerView extends AppCompatActivity {
 
         incidentTitleTextView.setText(incidentName.toString());
 
-        List<Incident> incidentList = DbConnection.getDaoSession(getApplicationContext())
+        incidentList = DbConnection.getDaoSession(getApplicationContext())
                 .getIncidentDao()
                 .queryBuilder()
                 .where(IncidentDao.Properties.Name.eq(incidentName))
@@ -51,6 +53,25 @@ public class IncidentRecyclerView extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                //Remove swiped item from list and notify the RecyclerView
+                Incident incidentToDelete = incidentList.get(viewHolder.getAdapterPosition());
+                DbConnection.getDaoSession(getApplicationContext()).getIncidentDao().delete(incidentToDelete);
+                Toast.makeText(IncidentRecyclerView.this, "Deleted", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
         mAdapter.notifyDataSetChanged();
     }
+
 }

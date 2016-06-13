@@ -1,5 +1,6 @@
 package com.app.vehicledocdb.vehicledocdb;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -29,6 +32,8 @@ public class IncidentChartActivity extends AppCompatActivity {
     private PieChart mChart;
     //private float[] yData = {25, 20, 35};
     //private String[] xData = {};
+    ArrayList<Entry> yVals1 = new ArrayList<Entry>();
+    ArrayList<String> xVals = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +64,24 @@ public class IncidentChartActivity extends AppCompatActivity {
         l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
         l.setXEntrySpace(7);
         l.setYEntrySpace(5);
+
+
+        mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+                Intent intent = new Intent(getApplicationContext(), IncidentRecyclerView.class);
+                intent.putExtra("incidentName", xVals.get(e.getXIndex()));
+                startActivity(intent);
+            }
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+        });
     }
 
     private void addData() {
-        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
-        ArrayList<String> xVals = new ArrayList<String>();
         List<Incident> incidentList = new ArrayList<>();
         Map<String, Double> sumPriceByIncident = new HashMap<>();
         int index = 0;

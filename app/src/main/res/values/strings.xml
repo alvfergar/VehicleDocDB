@@ -42,5 +42,6 @@
     <string name="incident">Incident</string>
     <string name="requirement">Requirement</string>
     <string name="incidents_chart">Incidents Chart</string>
+    <string name="incident_list_by_category">Incident List</string>
 
 </resources>

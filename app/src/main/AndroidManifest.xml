@@ -20,27 +20,35 @@
         </activity>
         <activity
             android:name=".IncidentActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/incident">
+            android:label="@string/incident"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.vehicledocdb.vehicledocdb.MainActivity" />
         </activity>
         <activity
             android:name=".RequirementActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/requirement">>
+            android:label="@string/requirement"
+            android:parentActivityName=".MainActivity">
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.vehicledocdb.vehicledocdb.MainActivity" />
         </activity>
         <activity
             android:name=".IncidentChartActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="@string/incidents_chart">
+            android:label="@string/incidents_chart"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.vehicledocdb.vehicledocdb.MainActivity" />
+        </activity>
+        <activity android:name=".IncidentRecyclerView"
+            android:label="@string/incident_list_by_category">
+            android:parentActivityName=".IncidentChartActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.app.vehicledocdb.vehicledocdb.IncidentChartActivity" />
         </activity>
     </application>
 

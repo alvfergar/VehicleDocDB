@@ -11,7 +11,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoMaster;
@@ -32,7 +33,8 @@ public class IncidentActivity extends AppCompatActivity {
     private TextInputLayout inputLayoutIncidentName, inputLayoutIncidentDescription,
             inputLayoutIncidentDate, inputLayoutIncidentPrice;
 
-    private Spinner spinnerIncidentName;
+
+    private RadioGroup radioGroupIncidentName;
     private String mIncidentName;
 
     @Override
@@ -40,8 +42,9 @@ public class IncidentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incident);
 
-        inputLayoutIncidentName = (TextInputLayout)
-                findViewById(R.id.input_layout_incident_name);
+
+        radioGroupIncidentName = (RadioGroup) findViewById(R.id.radioGroupIncidentName);
+
         inputLayoutIncidentDescription = (TextInputLayout)
                 findViewById(R.id.input_layout_incident_description);
         inputLayoutIncidentDate = (TextInputLayout)
@@ -49,38 +52,13 @@ public class IncidentActivity extends AppCompatActivity {
         inputLayoutIncidentPrice = (TextInputLayout)
                 findViewById(R.id.input_layout_incident_price);
 
-        inputIncidentName = (EditText) findViewById(R.id.input_incident_name);
-//        spinnerIncidentName = (Spinner) findViewById(R.id.spinner);
+
         inputIncidentDescription = (EditText) findViewById(R.id.input_incident_description);
         inputIncidentDate = (EditText) findViewById(R.id.input_incident_date);
         inputIncidentPrice = (EditText) findViewById(R.id.input_incident_price);
 
 
-        inputIncidentName.addTextChangedListener(new IncidentTextWatcher(inputIncidentName));
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-//                R.array.incident_types, android.R.layout.simple_spinner_item);
-//// Specify the layout to use when the list of choices appears
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//// Apply the adapter to the spinner
-//        spinnerIncidentName.setAdapter(adapter);
-//        spinnerIncidentName.setSelection(-1);
-//
-//        spinnerIncidentName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if(position < 0){
-//                    Toast.makeText(getApplicationContext(),"Debe establecer un nombre", Toast.LENGTH_SHORT).show();
-//                }else{
-//                    String[] incidentNameArray = getResources().getStringArray(R.array.incident_types);
-//                    mIncidentName = incidentNameArray[position];
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
+
         inputIncidentDescription.addTextChangedListener(new IncidentTextWatcher(inputIncidentDescription));
         inputIncidentDate.addTextChangedListener(new IncidentTextWatcher(inputIncidentDate));
         inputIncidentPrice.addTextChangedListener(new IncidentTextWatcher(inputIncidentPrice));
@@ -97,6 +75,7 @@ public class IncidentActivity extends AppCompatActivity {
         mButtonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 submitForm();
             }
         });
@@ -104,7 +83,10 @@ public class IncidentActivity extends AppCompatActivity {
     }
 
     private void submitForm() {
-        if (!isValidateName()) {
+//        if (!isValidateName()) {
+//            return;
+//        }
+        if (!isValidateRadioName()){
             return;
         }
 
@@ -122,7 +104,7 @@ public class IncidentActivity extends AppCompatActivity {
 
         Incident incidentToPersist = new Incident();
         //incidentToPersist.setName(inputIncidentName.getText().toString());
-        incidentToPersist.setName(inputIncidentName.getText().toString());
+        incidentToPersist.setName(mIncidentName.toString());
         incidentToPersist.setDescription(inputIncidentDescription.getText().toString());
         incidentToPersist.setDate(inputIncidentDate.getText().toString());
         incidentToPersist.setPrice(Double.valueOf(inputIncidentPrice.getText().toString()));
@@ -144,6 +126,20 @@ public class IncidentActivity extends AppCompatActivity {
         } else {
             inputLayoutIncidentName.setErrorEnabled(false);
         }
+        return result;
+    }
+
+    private boolean isValidateRadioName(){
+        int selectedRadioButtonID = radioGroupIncidentName.getCheckedRadioButtonId();
+        boolean result = true;
+
+        if (selectedRadioButtonID != -1){
+            RadioButton radioButtonNameSelected = (RadioButton) findViewById(selectedRadioButtonID);
+            mIncidentName = radioButtonNameSelected.getText().toString();
+        }else{
+            result = false;
+        }
+
         return result;
     }
 
@@ -214,9 +210,6 @@ public class IncidentActivity extends AppCompatActivity {
         public void afterTextChanged(Editable s) {
             //we need to filter which is changed
             switch (view.getId()) {
-                case R.id.input_incident_name:
-                    isValidateName();
-                    break;
                 case R.id.input_incident_description:
                     isValidateAddress();
                     break;

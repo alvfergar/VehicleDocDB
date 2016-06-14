@@ -53,7 +53,7 @@
                 android:backgroundTint="@color/colorPrimary"
                 android:backgroundTintMode="multiply"
                 android:textColor="@android:color/white"
-                android:drawableLeft="@drawable/ic_add_circle_black_48dp"
+                android:drawableTop="@drawable/ic_add_circle_black_48dp"
                 android:drawableTint="@android:color/white"/>
 
             <Button
@@ -68,7 +68,7 @@
                 android:backgroundTint="@color/colorPrimary"
                 android:backgroundTintMode="multiply"
                 android:textColor="@android:color/white"
-                android:drawableLeft="@drawable/ic_add_circle_outline_black_48dp"
+                android:drawableTop="@drawable/ic_add_circle_outline_black_48dp"
                 android:drawableTint="@android:color/white"/>
 
 

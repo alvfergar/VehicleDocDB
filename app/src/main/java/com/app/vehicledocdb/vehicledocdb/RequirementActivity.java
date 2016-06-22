@@ -2,7 +2,6 @@ package com.app.vehicledocdb.vehicledocdb;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,10 +15,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoMaster;
 import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoSession;
 import com.app.vehicledocdb.vehicledocdb.greendaomodel.RequirementDao;
 import com.app.vehicledocdb.vehicledocdb.model.Requirement;
+import com.app.vehicledocdb.vehicledocdb.util.BuildDates;
 import com.app.vehicledocdb.vehicledocdb.util.DbConnection;
 
 import java.text.SimpleDateFormat;
@@ -29,9 +28,7 @@ import java.util.Locale;
 public class RequirementActivity extends AppCompatActivity {
 
 
-    public DaoSession daoSession;
-    public DaoMaster daoMaster;
-    private SQLiteDatabase db;
+    private DaoSession daoSession;
     private RequirementDao requirementDao;
 
     private Button mButtonCreate;
@@ -39,13 +36,15 @@ public class RequirementActivity extends AppCompatActivity {
     private TextInputLayout inputLayoutRequirementName, inputLayoutRequirementDate;
     private DatePickerDialog alarmDatePickerDialog;
     private SimpleDateFormat dateFormatter;
+    private SimpleDateFormat dateToPersist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requirement);
 
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        dateToPersist = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
 
         inputLayoutRequirementName = (TextInputLayout)
                 findViewById(R.id.input_layout_requirement_name);
@@ -87,6 +86,9 @@ public class RequirementActivity extends AppCompatActivity {
     }
 
     private void submitForm() {
+
+        String dateTextToPersist;
+
         if (!isValidateName()) {
             return;
         }
@@ -95,11 +97,14 @@ public class RequirementActivity extends AppCompatActivity {
             return;
         }
 
+        //We need to convert date from UI format to DB format
+        dateTextToPersist = BuildDates.convertDayMonthYearToYearMonthDay(inputRequirementDate.getText().toString());
+
         Requirement requirementToPersist = new Requirement();
         requirementToPersist.setName(inputRequirementName.getText().toString());
-        requirementToPersist.setEndDate(inputRequirementDate.getText().toString());
-
+        requirementToPersist.setEndDate(dateTextToPersist);
         requirementDao.insert(requirementToPersist);
+
         Toast.makeText(this, "New Requirement Created", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, MainActivity.class);
@@ -180,7 +185,6 @@ public class RequirementActivity extends AppCompatActivity {
         public RequirementAlarmDateOnTouchListener(View view) {
             this.view = view;
         }
-
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {

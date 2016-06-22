@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.app.vehicledocdb.vehicledocdb.model.Requirement;
+import com.app.vehicledocdb.vehicledocdb.util.BuildDates;
 
 import java.util.List;
 
@@ -34,13 +35,18 @@ public class RequirementAdapter extends ArrayAdapter<Requirement>{
         LayoutInflater inflater = context.getLayoutInflater();
         convertView = inflater.inflate(layout_item_requirement, null);
 
+        String dateToView;
+
         Requirement requirementInstance = requirementList.get(position);
 
         TextView textRequirementName = (TextView) convertView.findViewById(R.id.textViewRequirementName);
         TextView textRequirementDate = (TextView) convertView.findViewById(R.id.textViewRequirementDate);
 
+        //Date format conversion between DataBase and UI
+        dateToView = BuildDates.convertYearMonthDayToDayMonthYear(requirementInstance.getEndDate());
+
         textRequirementName.setText(requirementInstance.getName());
-        textRequirementDate.setText(requirementInstance.getEndDate());
+        textRequirementDate.setText(dateToView);
 
         return convertView;
     }

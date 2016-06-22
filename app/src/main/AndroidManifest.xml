@@ -48,7 +48,7 @@
                 android:value="com.app.vehicledocdb.vehicledocdb.MainActivity" />
         </activity>
         <activity android:name=".IncidentRecyclerView"
-            android:label="@string/incident_list_by_category">
+            android:label="@string/incident_list_by_category"
             android:parentActivityName=".IncidentChartActivity"
             android:screenOrientation="portrait" >
             <meta-data

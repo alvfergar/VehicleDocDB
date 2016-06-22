@@ -138,6 +138,10 @@ public class IncidentActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+
+        //We need to close this activity because it's a create method and we don't want
+        //to navigate here across other activities with back button
+        finish();
     }
 
 

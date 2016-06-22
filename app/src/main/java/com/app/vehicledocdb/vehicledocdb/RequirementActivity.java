@@ -36,7 +36,6 @@ public class RequirementActivity extends AppCompatActivity {
     private TextInputLayout inputLayoutRequirementName, inputLayoutRequirementDate;
     private DatePickerDialog alarmDatePickerDialog;
     private SimpleDateFormat dateFormatter;
-    private SimpleDateFormat dateToPersist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,6 @@ public class RequirementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_requirement);
 
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-        dateToPersist = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
 
         inputLayoutRequirementName = (TextInputLayout)
                 findViewById(R.id.input_layout_requirement_name);
@@ -80,7 +78,6 @@ public class RequirementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 submitForm();
-
             }
         });
     }

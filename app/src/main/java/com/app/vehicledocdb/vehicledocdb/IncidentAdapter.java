@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.app.vehicledocdb.vehicledocdb.model.Incident;
+import com.app.vehicledocdb.vehicledocdb.util.BuildDates;
 
 import java.util.List;
 
@@ -43,8 +44,11 @@ public class IncidentAdapter extends RecyclerView.Adapter<IncidentAdapter.Incide
 
     @Override
     public void onBindViewHolder(IncidentAdapter.IncidentViewHolder holder, int position) {
+        String dateToView;
         Incident incident = incidentList.get(position);
-        holder.dateTextView.setText(incident.getDate());
+        //Date format conversion between DataBase and UI
+        dateToView = BuildDates.convertYearMonthDayToDayMonthYear(incident.getDate());
+        holder.dateTextView.setText(dateToView);
         holder.priceTextView.setText(incident.getPrice().toString() + " €");
         holder.descriptionTextView.setText(incident.getDescription());
 

@@ -1,37 +1,45 @@
 package com.app.vehicledocdb.vehicledocdb;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoMaster;
 import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoSession;
 import com.app.vehicledocdb.vehicledocdb.greendaomodel.IncidentDao;
 import com.app.vehicledocdb.vehicledocdb.model.Incident;
+import com.app.vehicledocdb.vehicledocdb.util.BuildDates;
+import com.app.vehicledocdb.vehicledocdb.util.DbConnection;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class IncidentActivity extends AppCompatActivity {
 
-    public DaoSession daoSession;
-    public DaoMaster daoMaster;
-    private SQLiteDatabase db;
+    private DaoSession daoSession;
     private IncidentDao incidentDao;
 
     private Button mButtonCreate;
-    private EditText inputIncidentName, inputIncidentDescription,
+    private EditText  inputIncidentDescription,
             inputIncidentDate, inputIncidentPrice;
-    private TextInputLayout inputLayoutIncidentName, inputLayoutIncidentDescription,
+    private TextInputLayout  inputLayoutIncidentDescription,
             inputLayoutIncidentDate, inputLayoutIncidentPrice;
+
+    private DatePickerDialog alarmDatePickerDialog;
+    private SimpleDateFormat dateFormatter;
 
 
     private RadioGroup radioGroupIncidentName;
@@ -45,6 +53,8 @@ public class IncidentActivity extends AppCompatActivity {
 
         radioGroupIncidentName = (RadioGroup) findViewById(R.id.radioGroupIncidentName);
 
+        dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        
         inputLayoutIncidentDescription = (TextInputLayout)
                 findViewById(R.id.input_layout_incident_description);
         inputLayoutIncidentDate = (TextInputLayout)
@@ -58,15 +68,25 @@ public class IncidentActivity extends AppCompatActivity {
         inputIncidentPrice = (EditText) findViewById(R.id.input_incident_price);
 
 
+        // Alarm date picker will be created here, and we will set value to our edittext
+        Calendar newCalendar = Calendar.getInstance();
+        alarmDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                inputIncidentDate.setText(dateFormatter.format(newDate.getTime()));
+            }
+
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
 
         inputIncidentDescription.addTextChangedListener(new IncidentTextWatcher(inputIncidentDescription));
         inputIncidentDate.addTextChangedListener(new IncidentTextWatcher(inputIncidentDate));
+        inputIncidentDate.setOnTouchListener(new RequirementAlarmDateOnTouchListener(inputIncidentDate));
         inputIncidentPrice.addTextChangedListener(new IncidentTextWatcher(inputIncidentPrice));
-
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "vehicle-db", null);
-        db = helper.getWritableDatabase();
-        daoMaster = new DaoMaster(db);
-        daoSession = daoMaster.newSession();
+        
+        daoSession = DbConnection.getDaoSession(this);
 
         incidentDao = daoSession.getIncidentDao();
 
@@ -83,9 +103,9 @@ public class IncidentActivity extends AppCompatActivity {
     }
 
     private void submitForm() {
-//        if (!isValidateName()) {
-//            return;
-//        }
+
+        String dateTextToPersist;
+
         if (!isValidateRadioName()){
             return;
         }
@@ -102,11 +122,15 @@ public class IncidentActivity extends AppCompatActivity {
             return;
         }
 
+        //We need to convert date from UI format to DB format
+        dateTextToPersist = BuildDates.convertDayMonthYearToYearMonthDay(inputIncidentDate.getText().toString());
+
+
         Incident incidentToPersist = new Incident();
         //incidentToPersist.setName(inputIncidentName.getText().toString());
         incidentToPersist.setName(mIncidentName.toString());
         incidentToPersist.setDescription(inputIncidentDescription.getText().toString());
-        incidentToPersist.setDate(inputIncidentDate.getText().toString());
+        incidentToPersist.setDate(dateTextToPersist);
         incidentToPersist.setPrice(Double.valueOf(inputIncidentPrice.getText().toString()));
 
         incidentDao.insert(incidentToPersist);
@@ -116,18 +140,6 @@ public class IncidentActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private boolean isValidateName() {
-        String name = inputIncidentName.getText().toString().trim();
-        boolean result = true;
-        if (name.isEmpty()) {
-            inputLayoutIncidentName.setError(getString(R.string.incident_error));
-            requestFocus(inputIncidentName);
-            result = false;
-        } else {
-            inputLayoutIncidentName.setErrorEnabled(false);
-        }
-        return result;
-    }
 
     private boolean isValidateRadioName(){
         int selectedRadioButtonID = radioGroupIncidentName.getCheckedRadioButtonId();
@@ -221,6 +233,23 @@ public class IncidentActivity extends AppCompatActivity {
                     isValidatePrice();
                     break;
             }
+        }
+    }
+
+    private class RequirementAlarmDateOnTouchListener implements View.OnTouchListener {
+
+        private View view;
+
+        public RequirementAlarmDateOnTouchListener(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (v == inputIncidentDate) {
+                alarmDatePickerDialog.show();
+            }
+            return false;
         }
     }
 

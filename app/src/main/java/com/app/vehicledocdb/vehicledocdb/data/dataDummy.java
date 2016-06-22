@@ -22,9 +22,9 @@ public class DataDummy {
         listRequirements = new ArrayList<Requirement>();
         listIncidents = new ArrayList<Incident>();
 
-        listRequirements.add(new Requirement(null, "Seguro", "2016/08/12"));
-        listRequirements.add(new Requirement(null, "Itv", "2017/02/06"));
-        listRequirements.add(new Requirement(null, "Itv", "2017/04/15"));
+        listRequirements.add(new Requirement(null, "Seguro", "2016/08/12", Boolean.FALSE));
+        listRequirements.add(new Requirement(null, "Itv", "2017/02/06", Boolean.TRUE));
+        listRequirements.add(new Requirement(null, "Itv", "2017/04/15", Boolean.FALSE));
 
         listIncidents.add(new Incident(null, "Repair", "Calle Aire", "2016/06/05", 59.6));
         listIncidents.add(new Incident(null, "Inspection", "Av. Socorro", "2016/05/03", 120.60));

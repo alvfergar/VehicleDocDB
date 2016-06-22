@@ -41,6 +41,7 @@ public class GeneratorMain {
         requirement.addIdProperty();
         requirement.addStringProperty("name");
         requirement.addStringProperty("endDate");
+        requirement.addBooleanProperty("enabled");
         return requirement;
     }
 }

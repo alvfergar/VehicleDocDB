@@ -31,6 +31,7 @@ public class Data {
             contentValues = new ContentValues();
             contentValues.put(RequirementDao.Properties.Name.columnName, req.getName());
             contentValues.put(RequirementDao.Properties.EndDate.columnName, req.getEndDate());
+            contentValues.put(RequirementDao.Properties.Enabled.columnName, req.getEnabled());
             contentValuesRequirementList.add(contentValues);
             db.insert(RequirementDao.TABLENAME, "", contentValues);
         }

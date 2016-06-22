@@ -2,20 +2,18 @@ package com.app.vehicledocdb.vehicledocdb;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoMaster;
 import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoSession;
 import com.app.vehicledocdb.vehicledocdb.greendaomodel.RequirementDao;
 import com.app.vehicledocdb.vehicledocdb.model.Requirement;
+import com.app.vehicledocdb.vehicledocdb.util.DbConnection;
 
 import java.util.List;
 
@@ -30,8 +28,6 @@ public class MainActivityFragment extends Fragment {
     private RequirementAdapter requirementAdapter;
 
     public DaoSession daoSession;
-    public DaoMaster daoMaster;
-    private SQLiteDatabase db;
 
     private ListView mListView;
     private Button mRequerimentButton;
@@ -76,18 +72,7 @@ public class MainActivityFragment extends Fragment {
             }
         });
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               // Requirement selectedRequirement = (Requirement) requirementList.get(position);
-                //Intent
-            }
-        });
-
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getContext(), "vehicle-db", null);
-        db = helper.getWritableDatabase();
-        daoMaster = new DaoMaster(db);
-        daoSession = daoMaster.newSession();
+        daoSession = DbConnection.getDaoSession(getActivity());
 
         requirementDao = daoSession.getRequirementDao();
         requirementList = requirementDao.loadAll();

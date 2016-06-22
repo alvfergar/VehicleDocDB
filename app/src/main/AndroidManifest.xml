@@ -11,8 +11,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,7 +23,7 @@
             android:name=".IncidentActivity"
             android:label="@string/incident"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.vehicledocdb.vehicledocdb.MainActivity" />
@@ -32,7 +32,7 @@
             android:name=".RequirementActivity"
             android:label="@string/requirement"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -42,19 +42,25 @@
             android:name=".IncidentChartActivity"
             android:label="@string/incidents_chart"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.vehicledocdb.vehicledocdb.MainActivity" />
         </activity>
-        <activity android:name=".IncidentRecyclerView"
+        <activity
+            android:name=".IncidentRecyclerView"
             android:label="@string/incident_list_by_category"
             android:parentActivityName=".IncidentChartActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.app.vehicledocdb.vehicledocdb.IncidentChartActivity" />
         </activity>
+
+        <receiver
+            android:name=".alarm.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
     </application>
 
 </manifest>

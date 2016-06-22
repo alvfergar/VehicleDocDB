@@ -134,8 +134,9 @@ public class IncidentActivity extends AppCompatActivity {
         boolean result = true;
 
         if (selectedRadioButtonID != -1){
+//            we need to get name of field by tag, because text field is translated.
             RadioButton radioButtonNameSelected = (RadioButton) findViewById(selectedRadioButtonID);
-            mIncidentName = radioButtonNameSelected.getText().toString();
+            mIncidentName = radioButtonNameSelected.getTag().toString();
         }else{
             result = false;
         }

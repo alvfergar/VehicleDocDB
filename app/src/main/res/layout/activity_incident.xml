@@ -28,7 +28,7 @@
                 android:id="@+id/incidentNameTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Incident type"
+                android:text="@string/incident_type"
                 android:textSize="18dp"/>
 
             <RadioGroup
@@ -44,21 +44,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Gas" />
+                    android:text="@string/incident_gas"
+                    android:tag="Gas" />
 
                 <RadioButton
                     android:id="@+id/repairRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Repair" />
+                    android:text="@string/incident_repair"
+                    android:tag="Repair" />
 
                 <RadioButton
                     android:id="@+id/inspectionRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Inspection" />
+                    android:text="@string/incident_inspection"
+                    android:tag="Inspection" />
             </RadioGroup>
         </LinearLayout>
 

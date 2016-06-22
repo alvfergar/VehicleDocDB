@@ -43,5 +43,7 @@
     <string name="requirement">Requirement</string>
     <string name="incidents_chart">Incidents Chart</string>
     <string name="incident_list_by_category">Incident List</string>
+    <string name="incident_type">Incident type</string>
+
 
 </resources>

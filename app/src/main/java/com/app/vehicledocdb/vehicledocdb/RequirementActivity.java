@@ -1,5 +1,6 @@
 package com.app.vehicledocdb.vehicledocdb;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -7,9 +8,11 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -17,6 +20,11 @@ import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoMaster;
 import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoSession;
 import com.app.vehicledocdb.vehicledocdb.greendaomodel.RequirementDao;
 import com.app.vehicledocdb.vehicledocdb.model.Requirement;
+import com.app.vehicledocdb.vehicledocdb.util.DbConnection;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class RequirementActivity extends AppCompatActivity {
 
@@ -29,11 +37,15 @@ public class RequirementActivity extends AppCompatActivity {
     private Button mButtonCreate;
     private EditText inputRequirementName, inputRequirementDate;
     private TextInputLayout inputLayoutRequirementName, inputLayoutRequirementDate;
+    private DatePickerDialog alarmDatePickerDialog;
+    private SimpleDateFormat dateFormatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requirement);
+
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
         inputLayoutRequirementName = (TextInputLayout)
                 findViewById(R.id.input_layout_requirement_name);
@@ -44,15 +56,24 @@ public class RequirementActivity extends AppCompatActivity {
         inputRequirementName = (EditText) findViewById(R.id.input_requirement_name);
         inputRequirementDate = (EditText) findViewById(R.id.input_requirement_date);
 
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "vehicle-db", null);
-        db = helper.getWritableDatabase();
-        daoMaster = new DaoMaster(db);
-        daoSession = daoMaster.newSession();
+        // Alarm date picker will be created here, and we will set value to our edittext
+        Calendar newCalendar = Calendar.getInstance();
+        alarmDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                inputRequirementDate.setText(dateFormatter.format(newDate.getTime()));
+            }
+
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        daoSession = DbConnection.getDaoSession(this);
         requirementDao = daoSession.getRequirementDao();
 
         inputRequirementName.addTextChangedListener(new RequirementTextWatcher(inputRequirementName));
         inputRequirementDate.addTextChangedListener(new RequirementTextWatcher(inputRequirementDate));
+        inputRequirementDate.setOnTouchListener(new RequirementAlarmDateOnTouchListener(inputRequirementDate));
 
         mButtonCreate = (Button) findViewById(R.id.button_requirement_create);
 
@@ -150,5 +171,23 @@ public class RequirementActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private class RequirementAlarmDateOnTouchListener implements View.OnTouchListener {
+
+        private View view;
+
+        public RequirementAlarmDateOnTouchListener(View view) {
+            this.view = view;
+        }
+
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (v == inputRequirementDate) {
+                alarmDatePickerDialog.show();
+            }
+            return false;
+        }
     }
 }

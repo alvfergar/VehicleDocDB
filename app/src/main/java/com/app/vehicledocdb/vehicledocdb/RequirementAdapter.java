@@ -1,6 +1,9 @@
 package com.app.vehicledocdb.vehicledocdb;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.app.vehicledocdb.vehicledocdb.alarm.AlarmUtil;
 import com.app.vehicledocdb.vehicledocdb.model.Requirement;
 import com.app.vehicledocdb.vehicledocdb.util.BuildDates;
 
@@ -22,6 +26,8 @@ public class RequirementAdapter extends ArrayAdapter<Requirement> {
     private List<Requirement> requirementList;
     private Activity context;
     private int layout_item_requirement;
+    AlarmManager alarmManager;
+    PendingIntent pendingIntent;
 
     public RequirementAdapter(Activity context, int layout_item_requirement, List<Requirement> requirementList) {
         super(context, layout_item_requirement, requirementList);
@@ -39,6 +45,8 @@ public class RequirementAdapter extends ArrayAdapter<Requirement> {
 
         String dateToView;
 
+        alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
         final Requirement requirementInstance = requirementList.get(position);
 
         TextView textRequirementName = (TextView) convertView.findViewById(R.id.textViewRequirementName);
@@ -51,8 +59,10 @@ public class RequirementAdapter extends ArrayAdapter<Requirement> {
             public void onClick(View v) {
                 if (switchRequirementAlarm.isChecked()) {
                     Log.wtf("ALARM", "switch activado para alarma " + requirementInstance.getName());
-                }else{
+                    AlarmUtil.setAlarm( context, requirementInstance);
+                } else {
                     Log.wtf("ALARM", "switch desactivado para alarma " + requirementInstance.getName());
+                    AlarmUtil.cancelAlarm( context, requirementInstance );
                 }
             }
         });

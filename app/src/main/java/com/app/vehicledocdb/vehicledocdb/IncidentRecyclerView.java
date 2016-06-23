@@ -47,6 +47,7 @@ public class IncidentRecyclerView extends AppCompatActivity {
                 .orderAsc(IncidentDao.Properties.Date)
                 .list();
 
+        DbConnection.closeDb();
         mAdapter = new IncidentAdapter(incidentList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -64,6 +65,7 @@ public class IncidentRecyclerView extends AppCompatActivity {
                 //Remove swiped item from list and notify the RecyclerView
                 Incident incidentToDelete = incidentList.get(viewHolder.getAdapterPosition());
                 DbConnection.getDaoSession(getApplicationContext()).getIncidentDao().delete(incidentToDelete);
+                DbConnection.closeDb();
                 Toast.makeText(IncidentRecyclerView.this, "Deleted", Toast.LENGTH_SHORT).show();
             }
         };

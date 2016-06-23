@@ -143,6 +143,7 @@ public class IncidentChartActivity extends AppCompatActivity {
         DaoSession daoSession = DbConnection.getDaoSession(getApplicationContext());
         IncidentDao incidentDao = daoSession.getIncidentDao();
         incidentList = incidentDao.loadAll();
+        DbConnection.closeDb();
 
         return incidentList;
     }

@@ -101,6 +101,7 @@ public class RequirementActivity extends AppCompatActivity {
         requirementToPersist.setName(inputRequirementName.getText().toString());
         requirementToPersist.setEndDate(dateTextToPersist);
         requirementDao.insert(requirementToPersist);
+        DbConnection.closeDb();
 
         Toast.makeText(this, "New Requirement Created", Toast.LENGTH_SHORT).show();
 

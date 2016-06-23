@@ -13,8 +13,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.app.vehicledocdb.vehicledocdb.alarm.AlarmUtil;
+import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoSession;
+import com.app.vehicledocdb.vehicledocdb.greendaomodel.RequirementDao;
 import com.app.vehicledocdb.vehicledocdb.model.Requirement;
 import com.app.vehicledocdb.vehicledocdb.util.BuildDates;
+import com.app.vehicledocdb.vehicledocdb.util.DbConnection;
 
 import java.util.List;
 
@@ -57,6 +60,8 @@ public class RequirementAdapter extends ArrayAdapter<Requirement> {
         switchRequirementAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //set new value of requirementInstance
+                requirementInstance.setEnabled(switchRequirementAlarm.isChecked());
                 if (switchRequirementAlarm.isChecked()) {
                     Log.wtf("ALARM", "switch activado para alarma " + requirementInstance.getName());
                     AlarmUtil.setAlarm( context, requirementInstance);
@@ -64,6 +69,11 @@ public class RequirementAdapter extends ArrayAdapter<Requirement> {
                     Log.wtf("ALARM", "switch desactivado para alarma " + requirementInstance.getName());
                     AlarmUtil.cancelAlarm( context, requirementInstance );
                 }
+                /*update requirementInstance because this enabled value was changed*/
+                DaoSession  daoSession = DbConnection.getDaoSession(context);
+                RequirementDao requirementDao = daoSession.getRequirementDao();
+                requirementDao.update(requirementInstance);
+                DbConnection.closeDb();
             }
         });
 

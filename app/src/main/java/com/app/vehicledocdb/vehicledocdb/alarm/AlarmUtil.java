@@ -28,7 +28,7 @@ public class AlarmUtil extends BroadcastReceiver {
 
         //For testing purposes it's going to use calendar instead requirement.getEndDate value
         Calendar calendar = Calendar.getInstance();
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() + 3000, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() + 10000, pendingIntent);
     }
 
     public static void cancelAlarm(Context context, Requirement requirement) {
@@ -39,6 +39,8 @@ public class AlarmUtil extends BroadcastReceiver {
 
     public static PendingIntent createPendingIntent(Context context, Requirement requirement) {
         Intent alarmIntent = new Intent(context, AlarmUtil.class);
+        alarmIntent.putExtra("requirementName", requirement.getName());
+        alarmIntent.putExtra("requirementDate", requirement.getEndDate());
         return PendingIntent.getBroadcast(context, requirement.getId().intValue(), alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
@@ -61,8 +63,8 @@ public class AlarmUtil extends BroadcastReceiver {
 
         NotificationCompat.Builder notification = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("REQUIREMENT ALARM")
-                .setContentText("Texto a mostrar")
+                .setContentTitle(intent.getStringExtra("requirementName"))
+                .setContentText("It's the day of "+intent.getStringExtra("requirementName"))
                 .setSound(soundUri)
                 .setContentIntent(pendingIntent)
                 .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000});

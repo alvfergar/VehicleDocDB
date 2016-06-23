@@ -134,6 +134,7 @@ public class IncidentActivity extends AppCompatActivity {
         incidentToPersist.setPrice(Double.valueOf(inputIncidentPrice.getText().toString()));
 
         incidentDao.insert(incidentToPersist);
+        DbConnection.closeDb();
         Toast.makeText(this, "New Incident Created", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, MainActivity.class);

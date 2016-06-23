@@ -80,6 +80,8 @@ public class MainActivityFragment extends Fragment {
 
         mListView.setAdapter(requirementAdapter);
 
+        DbConnection.closeDb();
+
         return rootView;
     }
 

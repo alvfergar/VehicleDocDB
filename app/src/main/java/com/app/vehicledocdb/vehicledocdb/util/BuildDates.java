@@ -53,4 +53,20 @@ public class BuildDates {
 
         return result;
     }
+
+    public static Calendar convertToCalendar(String date){
+        SimpleDateFormat datePersist;
+        Calendar cal = Calendar.getInstance();
+
+        datePersist = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
+
+        try{
+            cal.setTime(datePersist.parse(date));
+        } catch (ParseException e){
+            Log.e("Date", "Date conversion error");
+            e.printStackTrace();
+        }
+
+        return cal;
+    }
 }

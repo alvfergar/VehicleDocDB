@@ -33,9 +33,9 @@ public class IncidentActivity extends AppCompatActivity {
     private IncidentDao incidentDao;
 
     private Button mButtonCreate;
-    private EditText  inputIncidentDescription,
+    private EditText inputIncidentDescription,
             inputIncidentDate, inputIncidentPrice;
-    private TextInputLayout  inputLayoutIncidentDescription,
+    private TextInputLayout inputLayoutIncidentDescription,
             inputLayoutIncidentDate, inputLayoutIncidentPrice;
 
     private DatePickerDialog alarmDatePickerDialog;
@@ -54,7 +54,7 @@ public class IncidentActivity extends AppCompatActivity {
         radioGroupIncidentName = (RadioGroup) findViewById(R.id.radioGroupIncidentName);
 
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-        
+
         inputLayoutIncidentDescription = (TextInputLayout)
                 findViewById(R.id.input_layout_incident_description);
         inputLayoutIncidentDate = (TextInputLayout)
@@ -85,7 +85,7 @@ public class IncidentActivity extends AppCompatActivity {
         inputIncidentDate.addTextChangedListener(new IncidentTextWatcher(inputIncidentDate));
         inputIncidentDate.setOnTouchListener(new RequirementAlarmDateOnTouchListener(inputIncidentDate));
         inputIncidentPrice.addTextChangedListener(new IncidentTextWatcher(inputIncidentPrice));
-        
+
         daoSession = DbConnection.getDaoSession(this);
 
         incidentDao = daoSession.getIncidentDao();
@@ -106,7 +106,7 @@ public class IncidentActivity extends AppCompatActivity {
 
         String dateTextToPersist;
 
-        if (!isValidateRadioName()){
+        if (!isValidateRadioName()) {
             return;
         }
 
@@ -146,15 +146,15 @@ public class IncidentActivity extends AppCompatActivity {
     }
 
 
-    private boolean isValidateRadioName(){
+    private boolean isValidateRadioName() {
         int selectedRadioButtonID = radioGroupIncidentName.getCheckedRadioButtonId();
         boolean result = true;
 
-        if (selectedRadioButtonID != -1){
+        if (selectedRadioButtonID != -1) {
 //          we need to get name of field by tag, because text field is translated.
             RadioButton radioButtonNameSelected = (RadioButton) findViewById(selectedRadioButtonID);
             mIncidentName = radioButtonNameSelected.getTag().toString();
-        }else{
+        } else {
             result = false;
         }
 
@@ -206,7 +206,7 @@ public class IncidentActivity extends AppCompatActivity {
         }
     }
 
-    private class IncidentTextWatcher implements TextWatcher{
+    private class IncidentTextWatcher implements TextWatcher {
 
         private View view;
 

@@ -14,6 +14,7 @@ import android.util.Log;
 import com.app.vehicledocdb.vehicledocdb.MainActivity;
 import com.app.vehicledocdb.vehicledocdb.R;
 import com.app.vehicledocdb.vehicledocdb.model.Requirement;
+import com.app.vehicledocdb.vehicledocdb.util.BuildDates;
 
 import java.util.Calendar;
 
@@ -27,8 +28,11 @@ public class AlarmUtil extends BroadcastReceiver {
         PendingIntent pendingIntent = createPendingIntent(context, requirement);
 
         //For testing purposes it's going to use calendar instead requirement.getEndDate value
-        Calendar calendar = Calendar.getInstance();
-        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() + 10000, pendingIntent);
+        //Calendar calendar = Calendar.getInstance();
+
+        //Real --> this must 
+        Calendar calendar = BuildDates.convertToCalendar(requirement.getEndDate().toString());
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 
     public static void cancelAlarm(Context context, Requirement requirement) {
@@ -41,7 +45,8 @@ public class AlarmUtil extends BroadcastReceiver {
         Intent alarmIntent = new Intent(context, AlarmUtil.class);
         alarmIntent.putExtra("requirementName", requirement.getName());
         alarmIntent.putExtra("requirementDate", requirement.getEndDate());
-        return PendingIntent.getBroadcast(context, requirement.getId().intValue(), alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, requirement.getId().intValue(), alarmIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     @Override

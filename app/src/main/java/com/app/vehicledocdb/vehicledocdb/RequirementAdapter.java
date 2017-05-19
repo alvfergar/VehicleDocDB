@@ -82,6 +82,10 @@ public class RequirementAdapter extends ArrayAdapter<Requirement> {
 
         textRequirementName.setText(requirementInstance.getName());
         textRequirementDate.setText(dateToView);
+
+        if(requirementInstance.getEnabled() == null){
+            requirementInstance.setEnabled(false);
+        }
         switchRequirementAlarm.setChecked(requirementInstance.getEnabled());
 
         return convertView;

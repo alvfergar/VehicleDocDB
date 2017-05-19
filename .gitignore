@@ -34,6 +34,7 @@ captures/
 
 # Intellij
 *.iml
+<<<<<<< HEAD
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/gradle.xml
@@ -48,3 +49,13 @@ captures/
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
+=======
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+.idea/
+>>>>>>> de1867859d0e3d293630a037469cad1981c55f27

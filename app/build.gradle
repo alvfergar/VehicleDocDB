@@ -1,8 +1,13 @@
 apply plugin: 'com.android.application'
 
+
 android {
     compileSdkVersion 23
+<<<<<<< HEAD
     buildToolsVersion '25.0.0'
+=======
+    buildToolsVersion '23.0.2'
+>>>>>>> de1867859d0e3d293630a037469cad1981c55f27
 
     defaultConfig {
         applicationId "com.app.vehicledocdb.vehicledocdb"
@@ -20,12 +25,18 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:design:23.2.1'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
     compile 'org.greenrobot:greendao:2.2.0'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.5'
     compile 'com.google.guava:guava:19.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.google.firebase:firebase-crash:10.0.1'
+    compile 'com.google.firebase:firebase-core:10.0.1'
+    testCompile 'junit:junit:4.12'
 }
+
+
+
+apply plugin: 'com.google.gms.google-services'

@@ -14,6 +14,7 @@ import com.app.vehicledocdb.vehicledocdb.greendaomodel.DaoSession;
 import com.app.vehicledocdb.vehicledocdb.greendaomodel.RequirementDao;
 import com.app.vehicledocdb.vehicledocdb.model.Requirement;
 import com.app.vehicledocdb.vehicledocdb.util.DbConnection;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
 
@@ -34,6 +35,8 @@ public class MainActivityFragment extends Fragment {
     private Button mIncidentButton;
     private Button mViewIncidentChartButton;
 
+    private FirebaseAnalytics firebaseAnalytics;
+
     public MainActivityFragment() {
     }
 
@@ -42,6 +45,10 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
+
+        firebaseAnalytics.setAnalyticsCollectionEnabled(true);
 
         mListView = (ListView) rootView.findViewById(R.id.listView);
         mRequerimentButton = (Button) rootView.findViewById(R.id.requirementButton);
